@@ -1,46 +1,132 @@
-# Système de Prédiction d'AVC
+# Early Stroke Prediction System — MTI850 Project
 
-## Présentation du Projet
-Ce projet vise à développer un outil analytique capable d'évaluer la probabilité qu'un patient subisse un accident vasculaire cérébral (AVC) en fonction de facteurs démographiques et médicaux. Selon l'OMS, les AVC sont la troisième cause de décès et d'invalidité dans le monde. 
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python)
+![PySpark](https://img.shields.io/badge/PySpark-Apache%20Spark-orange?logo=apachespark)
+![ML](https://img.shields.io/badge/Domain-Healthcare%20%7C%20Big%20Data%20%7C%20ML-green)
+![License](https://img.shields.io/badge/License-Academic-lightgrey)
 
-L'intérêt principal de ce projet est l'utilisation de **Big Data Analytics** pour traiter et modéliser des données de santé à grande échelle en utilisant l'écosystème **Apache Spark**.
-
-## Données
-Le projet utilise le jeu de données "Kaggle Stroke Prediction Dataset".
-- **Volume** : ~5 110 enregistrements (augmentés par synthèse pour simuler un contexte Big Data).
-- **Cible** : `stroke` (Indicateur binaire).
-- **Caractéristiques clés** : Genre, âge, hypertension, maladies cardiaques, statut matrimonial, type de travail, niveau de glucose, IMC et statut de fumeur.
-
-## Technologies Utilisées
-- **Langage** : Python
-- **Traitement de données** : PySpark (Spark SQL & MLlib), Pandas, NumPy
-- **Visualisation** : Matplotlib, Seaborn
-- **Modélisation** : Logistic Regression, Random Forest, GBT Classifier
-- **Infrastructure** : Google Colab / Hadoop HDFS
-
-## Fonctionnalités
-1. **Data Augmentation** : Simulation de données massives avec ajout de bruit et de valeurs manquantes pour tester la robustesse des pipelines.
-2. **Prétraitement & Nettoyage** : Imputation de valeurs manquantes (Moyenne/Mode), encodage des variables catégorielles (StringIndexer, OneHotEncoder).
-3. **Analyse Exploratoire (EDA)** : Visualisation des corrélations et des distributions des variables médicales.
-4. **Machine Learning** : 
-   - Gestion du déséquilibre des classes (Oversampling & Class Weights).
-   - Évaluation via AUC-ROC et Recall.
-   - Modèle **Random Forest** optimisé avec un Recall de **~86%** pour la détection des cas positifs.
-5. **Pipeline de Production** : Création d'un pipeline Spark complet exportable pour des prédictions en temps réel.
-6. **Streaming (Simulation)** : Mise en place d'un flux de données structuré pour simuler l'arrivée de données de patients en continu.
-
-## Structure du Notebook
-- **Section 1-3** : Configuration de Spark et exploration initiale.
-- **Section 4-5** : Visualisation des données et ingénierie des variables.
-- **Section 6** : Gestion du stockage (Parquet, HDFS).
-- **Section 7-8** : Modélisation, comparaison des algorithmes et sauvegarde des modèles.
-- **Section 9-10** : Déploiement du Pipeline et test sur flux de données (Streaming).
-
-## Équipe
-Projet réalisé par :
-- Fatima IGUEROUFA
-- Louis-Philippe ROBICHAUD
-- Tareq DERDAKI
+> A **Big Data Analytics** pipeline for early stroke risk prediction, built on **Apache Spark (PySpark)** and trained on augmented patient health records — achieving ~86% Recall on positive stroke cases using an optimized Random Forest classifier.
 
 ---
-*Référence : [1] World Health Organization (WHO). Global Health Estimates.*
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Dataset](#dataset)
+- [Features & Pipeline](#features--pipeline)
+- [Machine Learning Models](#machine-learning-models)
+- [Notebook Structure](#notebook-structure)
+- [Tech Stack](#tech-stack)
+- [Key Results](#key-results)
+- [Authors](#authors)
+
+---
+
+## Overview
+
+According to the **World Health Organization (WHO)**, stroke is the **third leading cause of death and disability worldwide**. Early detection is critical to improving patient outcomes.
+
+This project, developed as part of the **MTI850** course, builds an end-to-end analytical system capable of evaluating a patient's stroke probability based on demographic and medical features. The core focus is on applying **Big Data** processing techniques at scale using the **Apache Spark** ecosystem, including a streaming simulation for real-time patient data ingestion.
+
+---
+
+## Dataset
+
+The project uses the [Kaggle Stroke Prediction Dataset](https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset).
+
+| Property | Details |
+|---|---|
+| Base volume | ~5,110 patient records |
+| Augmented volume | Synthetically expanded to simulate a Big Data context |
+| Target variable | `stroke` (binary: 0 / 1) |
+| Key features | Age, gender, hypertension, heart disease, marital status, work type, average glucose level, BMI, smoking status |
+
+> **Note:** Data augmentation includes controlled noise injection and random missing value introduction to stress-test pipeline robustness.
+
+---
+
+## Features & Pipeline
+
+The project implements a complete, production-ready Spark pipeline across the following stages:
+
+1. **Data Augmentation**  
+   Synthetic data generation to simulate large-scale volumes, with added noise and missing values.
+
+2. **Preprocessing & Cleaning**  
+   Missing value imputation (mean/mode strategies), categorical encoding via `StringIndexer` and `OneHotEncoder`.
+
+3. **Exploratory Data Analysis (EDA)**  
+   Correlation matrices, feature distributions, and class imbalance visualization across medical variables.
+
+4. **Modeling & Class Imbalance Handling**  
+   Oversampling (SMOTE-like) and class weighting strategies to address the strong imbalance between stroke/non-stroke cases.
+
+5. **Production Pipeline**  
+   Full exportable Spark ML pipeline enabling real-time inference on new patient records.
+
+6. **Streaming Simulation**  
+   Structured streaming setup to simulate continuous patient data arrival and trigger live predictions.
+
+---
+
+## Machine Learning Models
+
+Three classifiers were trained and evaluated using **AUC-ROC** and **Recall** as primary metrics (Recall prioritized to minimize false negatives in a medical context):
+
+| Model | Notes |
+|---|---|
+| Logistic Regression | Baseline linear model |
+| Random Forest | Best performer — optimized for Recall |
+| Gradient Boosted Trees (GBT) | Ensemble boosting approach |
+
+> **Best model:** Random Forest with a Recall of **~86%** on positive stroke cases.
+
+---
+
+## Notebook Structure
+
+| Section | Content |
+|---|---|
+| 1–3 | Spark environment setup & initial data exploration |
+| 4–5 | Data visualization & feature engineering |
+| 6 | Storage management (Parquet format, HDFS) |
+| 7–8 | Model training, algorithm comparison & model export |
+| 9–10 | Pipeline deployment & structured streaming test |
+
+---
+
+## Tech Stack
+
+| Category | Tools |
+|---|---|
+| Language | Python 3 |
+| Big Data Processing | PySpark (Spark SQL, MLlib) |
+| Data Analysis | Pandas, NumPy |
+| Visualization | Matplotlib, Seaborn |
+| ML Models | Logistic Regression, Random Forest, GBT (via MLlib) |
+| Infrastructure | Google Colab / Hadoop HDFS |
+
+---
+
+## Key Results
+
+- Random Forest achieves **~86% Recall** on positive stroke cases, minimizing the risk of missed diagnoses.
+- PCA and correlation analysis reveal **age, glucose level, and hypertension** as the strongest predictors.
+- The full Spark pipeline is exportable and compatible with real-time streaming inference.
+
+---
+
+## Authors
+
+| Name | Institution |
+|---|---|
+| Fatima Igueroufa | Université de Technologie de Compiègne (UTC) |
+| Louis-Philippe Robichaud | Université de Technologie de Compiègne (UTC) |
+| Tareq Derdaki | Université de Technologie de Compiègne (UTC) |
+
+**Course:** MTI850  
+**Institution:** [Université de Technologie de Compiègne (UTC)](https://www.utc.fr)
+
+---
+
+> **Reference:** World Health Organization (WHO). *Global Health Estimates.* [who.int](https://www.who.int)
