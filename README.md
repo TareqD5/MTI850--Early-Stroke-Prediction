@@ -120,12 +120,12 @@ Three classifiers were trained and evaluated using **AUC-ROC** and **Recall** as
 
 | Name | Institution |
 |---|---|
-| Fatima Igueroufa | Université de Technologie de Compiègne (UTC) |
-| Louis-Philippe Robichaud | Université de Technologie de Compiègne (UTC) |
+| Fatima Igueroufa | Ecole de Technologie Supérieure (ETS) |
+| Louis-Philippe Robichaud | Ecole de Technologie Supérieure (ETS) |
 | Tareq Derdaki | Université de Technologie de Compiègne (UTC) |
 
 **Course:** MTI850  
-**Institution:** [Université de Technologie de Compiègne (UTC)](https://www.utc.fr)
+**Institution:** [Ecole de Technologie Supérieure (ETS)](https://www.ets.ca)
 
 ---
 
